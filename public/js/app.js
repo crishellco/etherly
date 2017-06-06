@@ -1643,7 +1643,6 @@ module.exports = function spread(callback) {
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
 window._ = __webpack_require__(33);
 
 /**
@@ -41436,58 +41435,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        Highcharts.stockChart('eth-chart', {
-            rangeSelector: {
-                buttons: [{
-                    count: 5,
-                    text: '5m',
-                    type: 'minute'
-                }, {
-                    count: 15,
-                    text: '15m',
-                    type: 'minute'
-                }, {
-                    count: 30,
-                    text: '30m',
-                    type: 'minute'
-                }, {
-                    count: 1,
-                    text: '1h',
-                    type: 'hour'
-                }, {
-                    count: 6,
-                    text: '6h',
-                    type: 'hour'
-                }, {
-                    count: 12,
-                    text: '12h',
-                    type: 'hour'
-                }, {
-                    text: 'All',
-                    type: 'all'
-                }],
-                selected: 1
-            },
+    methods: {
+        data: function data() {
+            return {
+                data: []
+            };
+        },
+        fetch: function fetch() {
+            var _this = this;
 
-            title: {
-                text: 'ETH Price'
-            },
+            axios.get('/api/charts/eth').then(function (_ref) {
+                var data = _ref.data;
 
-            series: [{
-                type: 'line',
-                name: 'ETH Price',
-                data: this.data,
-                dataGrouping: {
-                    units: [['minute', [5]]]
-                }
-            }]
-        });
+                _this.data = data;
+                _this.renderChart();
+            });
+        },
+        renderChart: function renderChart() {
+            Highcharts.stockChart('eth-chart', {
+                rangeSelector: {
+                    buttons: [{
+                        count: 5,
+                        text: '5m',
+                        type: 'minute'
+                    }, {
+                        count: 15,
+                        text: '15m',
+                        type: 'minute'
+                    }, {
+                        count: 30,
+                        text: '30m',
+                        type: 'minute'
+                    }, {
+                        count: 1,
+                        text: '1h',
+                        type: 'hour'
+                    }, {
+                        count: 6,
+                        text: '6h',
+                        type: 'hour'
+                    }, {
+                        count: 12,
+                        text: '12h',
+                        type: 'hour'
+                    }, {
+                        text: 'All',
+                        type: 'all'
+                    }],
+                    selected: 6
+                },
+
+                title: {
+                    text: 'ETH Price'
+                },
+
+                series: [{
+                    type: 'candlestick',
+                    name: 'ETH Price',
+                    data: this.data,
+                    dataGrouping: {
+                        units: [['minute', [5]]]
+                    }
+                }]
+            });
+        }
     },
 
-
-    props: {
-        data: Array
+    mounted: function mounted() {
+        this.fetch();
     }
 });
 

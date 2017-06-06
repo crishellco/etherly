@@ -6,7 +6,7 @@
         <div class="panel-heading">Dashboard</div>
 
         <div class="panel-body">
-            <eth-chart :data="{{ json_encode($data) }}"></eth-chart>
+            <eth-chart></eth-chart>
         </div>
     </div>
 </div>

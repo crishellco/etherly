@@ -1,15 +1,23 @@
 <?php
 
+use App\Price;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+Auth::routes();
+
 Route::get('/', function () {
     return redirect('/home');
 });
 
-Auth::routes();
-
-
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/settings', 'SettingsController', ['only' => ['index', 'store']]);
 
+Route::group(['prefix' => '/api', 'middleware' => 'auth'], function() {
+    Route::group(['prefix' => '/charts'], function() {
+        Route::resource('eth', 'EtherController', ['only' => 'index']);
+    });
+});
 
 // Disable registration
 Route::any('/register', function() {
