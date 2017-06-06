@@ -15,11 +15,14 @@ class SettingsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'name' => 'required|min:4',
             'slack_webhook' => 'nullable|url',
             'threshold' => 'required|numeric'
         ]);
 
-        $updates = $request->only(['notifications_enabled', 'slack_webhook', 'threshold']);
+        $updates = $request->only(
+            ['name', 'notifications_enabled', 'slack_webhook', 'threshold']
+        );
 
         $updates['notifications_enabled'] = $request->has('notifications_enabled') ? true : false;
 

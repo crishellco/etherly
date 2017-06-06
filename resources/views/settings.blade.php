@@ -12,6 +12,20 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('settings.store') }}">
                             {{ csrf_field() }}
 
+                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                <label for="name" class="col-md-3 control-label">Name</label>
+
+                                <div class="col-md-9">
+                                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name', Auth::user()->name) }}" required autofocus>
+
+                                    @if ($errors->has('name'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
                             <div class="form-group{{ $errors->has('threshold') ? ' has-error' : '' }}">
                                 <label for="threshold" class="col-md-3 control-label">Threshold</label>
 
@@ -47,7 +61,7 @@
                                 <div class="col-md-9 col-md-offset-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="notifications_enabled" {{ old('notifications_enabled', Auth::user()->notifications_enabled) ? 'checked' : '' }}> Enable Notifications
+                                            <input type="checkbox" name="notifications_enabled" {{ old('notifications_enabled', Auth::user()->notifications_enabled) ? 'checked' : '' }}> Enable Slack & Email Notifications
                                         </label>
                                     </div>
                                 </div>

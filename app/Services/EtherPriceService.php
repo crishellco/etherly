@@ -43,6 +43,8 @@ class EtherPriceService
                 $currentPrice,
                 $historicalPrice,
                 $percentChange));
+
+            $user->storeNotification($currentPrice->id, $historicalPrice->id, $percentChange);
         }
     }
 
