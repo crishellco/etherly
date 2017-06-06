@@ -1,6 +1,5 @@
 <?php
 
-use App\Price;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,16 +10,19 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('/settings', 'SettingsController', ['only' => ['index', 'store']]);
 
-Route::group(['prefix' => '/api', 'middleware' => 'auth'], function() {
-    Route::group(['prefix' => '/charts'], function() {
-        Route::resource('eth', 'EtherController', ['only' => 'index']);
+Route::group(['middleware' => 'auth'], function() {
+    Route::resource('/settings', 'SettingsController', ['only' => ['index', 'store']]);
+
+    Route::group(['prefix' => '/api'], function() {
+        Route::group(['prefix' => '/charts'], function() {
+            Route::resource('eth', 'EtherController', ['only' => 'index']);
+        });
     });
-});
 
-Route::group(['middleware' => 'developer'], function() {
-    Route::resource('users', 'UsersController');
+    Route::group(['middleware' => 'developer'], function() {
+        Route::resource('users', 'UsersController');
+    });
 });
 
 // Disable registration

@@ -11,7 +11,6 @@ use Zttp\Zttp;
 
 class EtherPriceService
 {
-    const DEFAULT_PERCENT_CHANGE_THRESHOLD = 1;
     const PAST_DATA_THRESHOLD_MINUTES = 10;
 
     public function analyzePrice()
@@ -31,8 +30,13 @@ class EtherPriceService
         $thresholdExceeded = false;
 
         foreach($historicalPrices as $historicalPrice) {
-            $percentChange = round(($currentPrice->price - $historicalPrice->price) / $currentPrice->price * 100, 2);
-            if(abs($percentChange) >= (float) $user->threshold) {
+            $priceChange = $currentPrice->price - $historicalPrice->price;
+            $percentChange = $priceChange / $currentPrice->price * 100;
+
+            $priceThresholdExceeded = $user->threshold_price && (abs($priceChange) > $user->threshold_price);
+            $percentThresholdExceeded = $user->threshold_percent && (abs($percentChange) > $user->threshold_percent);
+
+            if($priceThresholdExceeded || $percentThresholdExceeded) {
                 $thresholdExceeded = true;
                 break;
             }
@@ -42,9 +46,10 @@ class EtherPriceService
             $user->notify(new EtherChangeThresholdExceeded(
                 $currentPrice,
                 $historicalPrice,
+                $priceChange,
                 $percentChange));
 
-            $user->storeNotification($currentPrice->id, $historicalPrice->id, $percentChange);
+            $user->storeNotification($currentPrice->id, $historicalPrice->id, $priceChange, $percentChange);
         }
     }
 

@@ -18,6 +18,10 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->double('threshold_percent')->nullable();
+            $table->double('threshold_price')->nullable();
+            $table->string('slack_webhook')->nullable();
+            $table->boolean('notifications_enabled')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

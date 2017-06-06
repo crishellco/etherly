@@ -16,7 +16,8 @@ class User extends Authenticatable
         'notifications_enabled',
         'password',
         'slack_webhook',
-        'threshold',
+        'threshold_percent',
+        'threshold_price',
     ];
 
     protected $hidden = [

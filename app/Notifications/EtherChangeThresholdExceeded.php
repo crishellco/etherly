@@ -13,18 +13,17 @@ class EtherChangeThresholdExceeded extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    const OVERVIEW_URL = 'https://www.cryptocompare.com/coins/eth/overview/USD';
-
     public $currentPrice;
     public $historicalPrice;
     public $percentChange;
-    public $threshold;
+    public $priceChange;
 
-    public function __construct(Price $currentPrice, Price $historicalPrice, $percentChange)
+    public function __construct(Price $currentPrice, Price $historicalPrice, $priceChange, $percentChange)
     {
         $this->currentPrice = $currentPrice;
         $this->historicalPrice = $historicalPrice;
         $this->percentChange = $percentChange;
+        $this->priceChange = number_format($priceChange, 2);
     }
 
     public function via()
@@ -39,9 +38,9 @@ class EtherChangeThresholdExceeded extends Notification implements ShouldQueue
             ->line("ETH price fluctuation has exceeded the threshold of change within the last 10 minutes.")
             ->line("Current Price: {$this->currentPrice->price}")
             ->line("Historical Price: {$this->historicalPrice->price}")
-            ->line("Change: {$this->percentChange}%")
-            ->line("Threshold: {$user->threshold}%")
-            ->action('View On CryptoCompare', self::OVERVIEW_URL);
+            ->line("Change: \${$this->priceChange} ({$this->percentChange}%)")
+            ->line("Threshold: \${$user->threshold_price} ({$user->threshold_percent}%)")
+            ->action('View On Etherly', config('app.url'));
     }
 
     public function toSlack($user)
@@ -49,12 +48,12 @@ class EtherChangeThresholdExceeded extends Notification implements ShouldQueue
         return (new SlackMessage)
             ->content('ETH Change Threshold Exceeded')
             ->attachment(function ($attachment) use ($user) {
-                $attachment->title('View On CryptoCompare', self::OVERVIEW_URL)
+                $attachment->title('View On Etherly', config('app.url'))
                     ->fields([
                         'Current Price' => $this->currentPrice->price,
                         'Historical Price' => $this->historicalPrice->price,
-                        'Change' => "{$this->percentChange}%",
-                        'Threshold' => "{$user->threshold}%",
+                        'Change' => "\${$this->priceChange} ({$this->percentChange}%)",
+                        'Threshold' => "\${$user->threshold_price} ({$user->threshold_percent}%)",
                     ]);
             });
     }

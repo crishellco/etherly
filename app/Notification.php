@@ -10,7 +10,9 @@ class Notification extends Model
         'user_id',
         'current_price_id',
         'historical_price_id',
+        'price_change',
         'percent_change',
-        'threshold',
+        'threshold_percent',
+        'threshold_price',
     ];
 }

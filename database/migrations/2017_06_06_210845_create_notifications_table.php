@@ -19,7 +19,9 @@ class CreateNotificationsTable extends Migration
             $table->unsignedInteger('current_price_id');
             $table->unsignedInteger('historical_price_id');
             $table->float('percent_change');
-            $table->float('threshold');
+            $table->float('price_change');
+            $table->double('threshold_percent')->nullable();
+            $table->double('threshold_price')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
