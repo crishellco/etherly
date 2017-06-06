@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\ModelTraits\StoresNotifications;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, StoresNotifications;
 
     protected $fillable = [
         'name',
@@ -31,17 +32,5 @@ class User extends Authenticatable
     public function routeNotificationForSlack()
     {
         return $this->slack_webhook;
-    }
-
-    public function storeNotification($currentPriceId, $historicalPriceId, $percentChange)
-    {
-        $notification = Notification::make([
-            'current_price_id' => $currentPriceId,
-            'historical_price_id' => $historicalPriceId,
-            'percent_change' => $percentChange,
-            'threshold' => $this->threshold,
-        ]);
-
-        $this->notifications()->save($notification);
     }
 }

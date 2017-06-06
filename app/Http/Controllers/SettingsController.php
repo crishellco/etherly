@@ -29,6 +29,6 @@ class SettingsController extends Controller
         Auth::user()->update($updates);
         flash('Settings updated.')->important();
 
-        return redirect('home');
+        return redirect('settings');
     }
 }
