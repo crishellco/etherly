@@ -19,6 +19,10 @@ Route::group(['prefix' => '/api', 'middleware' => 'auth'], function() {
     });
 });
 
+Route::group(['middleware' => 'developer'], function() {
+    Route::resource('users', 'UsersController');
+});
+
 // Disable registration
 Route::any('/register', function() {
     return redirect('/home');
