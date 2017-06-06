@@ -25,18 +25,6 @@
                     rangeSelector: {
                         buttons: [
                             {
-                                count: 5,
-                                text: '5m',
-                                type: 'minute',
-                            }, {
-                                count: 15,
-                                text: '15m',
-                                type: 'minute',
-                            }, {
-                                count: 30,
-                                text: '30m',
-                                type: 'minute',
-                            }, {
                                 count: 1,
                                 text: '1h',
                                 type: 'hour',
@@ -49,11 +37,14 @@
                                 text: '12h',
                                 type: 'hour',
                             }, {
+                                count: 1,
+                                text: '1w',
+                                type: 'week',
+                            }, {
                                 text: 'All',
                                 type: 'all',
                             }
                         ],
-                        selected: 6
                     },
 
                     title: {
@@ -65,13 +56,11 @@
                         name: 'ETH Price',
                         data: this.data,
                         dataGrouping: {
+                            forced: true,
                             units: [
-                                [
-                                    'minute',
-                                    [5],
-                                ]
+                                ['minute', 5]
                             ]
-                        }
+                        },
                     }]
                 });
             }

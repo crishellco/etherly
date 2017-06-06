@@ -41455,18 +41455,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Highcharts.stockChart('eth-chart', {
                 rangeSelector: {
                     buttons: [{
-                        count: 5,
-                        text: '5m',
-                        type: 'minute'
-                    }, {
-                        count: 15,
-                        text: '15m',
-                        type: 'minute'
-                    }, {
-                        count: 30,
-                        text: '30m',
-                        type: 'minute'
-                    }, {
                         count: 1,
                         text: '1h',
                         type: 'hour'
@@ -41479,10 +41467,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         text: '12h',
                         type: 'hour'
                     }, {
+                        count: 1,
+                        text: '1w',
+                        type: 'week'
+                    }, {
                         text: 'All',
                         type: 'all'
-                    }],
-                    selected: 6
+                    }]
                 },
 
                 title: {
@@ -41494,7 +41485,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     name: 'ETH Price',
                     data: this.data,
                     dataGrouping: {
-                        units: [['minute', [5]]]
+                        forced: true,
+                        units: [['minute', 5]]
                     }
                 }]
             });
