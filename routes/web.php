@@ -12,6 +12,7 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function() {
+    Route::resource('/notifications', 'NotificationsController', ['only' => ['index']]);
     Route::resource('/settings', 'SettingsController', ['only' => ['index', 'store']]);
 
     Route::group(['prefix' => '/api'], function() {

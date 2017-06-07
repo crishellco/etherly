@@ -29,7 +29,7 @@
                                 <td class="text-center">{{ $user->threshold }}</td>
                                 <td class="text-center">{{ (bool) $user->slack_webhook ? 'Yes' : 'No'  }}</td>
                                 <td class="text-center">{{ $user->notifications_enabled ? 'Yes' : 'No' }}</td>
-                                <th class="text-right">
+                                <td class="text-right">
                                     @if($user->id !== Auth::user()->id)
                                         <form action="{{ route('users.destroy', $user) }}" method="POST">
                                             {{ csrf_field() }}
@@ -40,7 +40,7 @@
                                             </div>
                                         </form>
                                     @endif
-                                </th>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

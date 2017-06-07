@@ -15,4 +15,24 @@ class Notification extends Model
         'threshold_percent',
         'threshold_price',
     ];
+
+    protected $with = [
+        'currentPrice',
+        'historicalPrice',
+    ];
+
+    public function currentPrice()
+    {
+        return $this->belongsTo(Price::class, 'current_price_id');
+    }
+
+    public function historicalPrice()
+    {
+        return $this->belongsTo(Price::class, 'historical_price_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
