@@ -1,5 +1,6 @@
 <?php
 
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 

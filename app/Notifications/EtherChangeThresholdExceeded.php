@@ -29,7 +29,7 @@ class EtherChangeThresholdExceeded extends Notification implements ShouldQueue
     public function via($user)
     {
         $methods = [];
-        
+
         if($user->via_mail) {
             $methods[] = 'mail';
         }
