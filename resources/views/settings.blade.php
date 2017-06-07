@@ -14,7 +14,7 @@
                         <label for="name" class="col-md-4 control-label">Name</label>
 
                         <div class="col-md-8">
-                            <input id="name" type="text" class="form-control" name="name" value="{{ old('name', Auth::user()->name) }}" required autofocus>
+                            <input id="name" type="text" class="form-control" name="name" value="{{ old('name', auth()->user()->name) }}" required autofocus>
 
                             @if ($errors->has('name'))
                                 <span class="help-block">
@@ -30,7 +30,7 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <div class="input-group-addon">%</div>
-                                <input type="text" class="form-control" name="threshold_percent" value="{{ old('threshold_percent', Auth::user()->threshold_percent) }}">
+                                <input type="text" class="form-control" name="threshold_percent" value="{{ old('threshold_percent', auth()->user()->threshold_percent) }}">
                             </div>
 
                             @if ($errors->has('threshold_percent'))
@@ -42,7 +42,7 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <div class="input-group-addon">$</div>
-                                <input type="text" class="form-control" name="threshold_price" value="{{ old('threshold_price', Auth::user()->threshold_price) }}">
+                                <input type="text" class="form-control" name="threshold_price" value="{{ old('threshold_price', auth()->user()->threshold_price) }}">
                             </div>
 
                             @if ($errors->has('threshold_price'))
@@ -57,7 +57,7 @@
                         <label for="slack_webhook" class="col-md-4 control-label">Slack Webhook</label>
 
                         <div class="col-md-8">
-                            <input id="slack_webhook" type="text" class="form-control" name="slack_webhook" value="{{ old('slack_webhook', Auth::user()->slack_webhook) }}">
+                            <input id="slack_webhook" type="text" class="form-control" name="slack_webhook" value="{{ old('slack_webhook', auth()->user()->slack_webhook) }}">
 
                             @if ($errors->has('slack_webhook'))
                                 <span class="help-block">
@@ -71,7 +71,7 @@
                         <div class="col-md-8 col-md-offset-4">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="notifications_enabled" {{ old('notifications_enabled', Auth::user()->notifications_enabled) ? 'checked' : '' }}> Enable Slack & Email Notifications
+                                    <input type="checkbox" name="notifications_enabled" {{ old('notifications_enabled', auth()->user()->notifications_enabled) ? 'checked' : '' }}> Enable Slack & Email Notifications
                                 </label>
                             </div>
                         </div>
