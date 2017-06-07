@@ -23,14 +23,16 @@ class SettingsController extends Controller
         $updates = $request->only(
             [
                 'name',
-                'notifications_enabled',
                 'slack_webhook',
                 'threshold_percent',
-                'threshold_price'
+                'threshold_price',
+                'via_email',
+                'via_slack',
             ]
         );
 
-        $updates['notifications_enabled'] = $request->has('notifications_enabled') ? true : false;
+        $updates['via_email'] = $request->has('via_email') ? true : false;
+        $updates['via_slack'] = $request->has('via_slack') ? true : false;
 
         auth()->user()->update($updates);
         flash('Settings updated.')->important();

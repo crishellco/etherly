@@ -11,13 +11,14 @@ class User extends Authenticatable
     use Notifiable, StoresNotifications;
 
     protected $fillable = [
-        'name',
         'email',
-        'notifications_enabled',
+        'name',
         'password',
         'slack_webhook',
         'threshold_percent',
         'threshold_price',
+        'via_email',
+        'via_slack',
     ];
 
     protected $hidden = [

@@ -71,7 +71,17 @@
                         <div class="col-md-8 col-md-offset-4">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="notifications_enabled" {{ old('notifications_enabled', auth()->user()->notifications_enabled) ? 'checked' : '' }}> Enable Slack & Email Notifications
+                                    <input type="checkbox" name="via_email" {{ old('via_email', auth()->user()->via_email) ? 'checked' : '' }}> Enable Email Notifications
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-8 col-md-offset-4">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="via_slack" {{ old('via_slack', auth()->user()->via_slack) ? 'checked' : '' }}> Enable Slack Notifications
                                 </label>
                             </div>
                         </div>

@@ -26,9 +26,19 @@ class EtherChangeThresholdExceeded extends Notification implements ShouldQueue
         $this->priceChange = number_format($priceChange, 2);
     }
 
-    public function via()
+    public function via($user)
     {
-        return ['mail', 'slack'];
+        $methods = [];
+        
+        if($user->via_mail) {
+            $methods[] = 'mail';
+        }
+
+        if($user->via_slack) {
+            $methods[] = 'slack';
+        }
+
+        return $methods;
     }
 
     public function toMail($user)
