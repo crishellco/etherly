@@ -30,8 +30,8 @@ class EtherPriceService
         $thresholdExceeded = false;
 
         foreach($historicalPrices as $historicalPrice) {
-            $priceChange = $currentPrice->price - $historicalPrice->price;
-            $percentChange = $priceChange / $currentPrice->price * 100;
+            $priceChange = $this->calculatePriceChange($currentPrice, $historicalPrice);
+            $percentChange = $this->calculatePercentChange($currentPrice, $historicalPrice);
 
             $priceThresholdExceeded = $user->threshold_price && (abs($priceChange) > $user->threshold_price);
             $percentThresholdExceeded = $user->threshold_percent && (abs($percentChange) > $user->threshold_percent);
@@ -51,6 +51,16 @@ class EtherPriceService
 
             $user->storeNotification($currentPrice->id, $historicalPrice->id, $priceChange, $percentChange);
         }
+    }
+
+    public function calculatePercentChange(Price $current, Price $historical)
+    {
+        return $this->calculatePriceChange($current, $historical) / $current->price * 100;
+    }
+
+    public function calculatePriceChange(Price $current, Price $historical)
+    {
+        return $current->price - $historical->price;
     }
 
     protected function getCurrentPrice()

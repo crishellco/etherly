@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\EtherPriceService;
+use App\Facades\EtherPrice;
 use Illuminate\Console\Command;
 
 class AnalyzeEtherPrice extends Command
@@ -16,8 +16,8 @@ class AnalyzeEtherPrice extends Command
         parent::__construct();
     }
 
-    public function handle(EtherPriceService $service)
+    public function handle()
     {
-        $service->analyzePrice();
+        EtherPrice::analyzePrice();
     }
 }

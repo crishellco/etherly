@@ -227,6 +227,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /**
+         * Application Facades...
+         */
+        'EtherPrice' => App\Facades\EtherPrice::class,
+
     ],
 
 ];
