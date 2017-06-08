@@ -28444,6 +28444,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     beforeMount: function beforeMount() {
+        this.chart = null;
+
         this.createSocket().listen('EtherPriceUpdated', this.fetch);
     },
 
@@ -28465,7 +28467,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         renderChart: function renderChart() {
-            Highcharts.stockChart('eth-chart', {
+            if (this.chart) {
+                this.chart.redraw();
+
+                return;
+            }
+
+            this.chart = Highcharts.stockChart('eth-chart', {
                 rangeSelector: {
                     buttons: [{
                         count: 1,

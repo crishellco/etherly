@@ -5,6 +5,8 @@
 <script>
     export default {
         beforeMount() {
+            this.chart = null;
+
             this
                 .createSocket()
                 .listen('EtherPriceUpdated', this.fetch);
@@ -27,7 +29,13 @@
             },
 
             renderChart() {
-                Highcharts.stockChart('eth-chart', {
+                if(this.chart) {
+                    this.chart.redraw();
+                    
+                    return;
+                }
+
+                this.chart = Highcharts.stockChart('eth-chart', {
                     rangeSelector: {
                         buttons: [
                             {
