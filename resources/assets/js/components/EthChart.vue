@@ -4,6 +4,12 @@
 
 <script>
     export default {
+        beforeMount() {
+            this
+                .createSocket()
+                .listen('EtherPriceUpdated', this.fetch);
+        },
+
         methods: {
             data() {
                 return {
@@ -64,10 +70,6 @@
                     }]
                 });
             }
-        },
-
-        mounted() {
-            this.fetch();
         },
     }
 </script>
