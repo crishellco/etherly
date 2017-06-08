@@ -19,7 +19,7 @@ class EtherPriceService
         $historicalPrices = $this->getHistoricalPrices();
 
         User::all()->each(function(User $user) use ($currentPrice, $historicalPrices) {
-            if($user->notifications_enabled) {
+            if($user->notificationsEnabled()) {
                 $this->analyzePriceByUser($user, $currentPrice, $historicalPrices);
             }
         });

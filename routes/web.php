@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::group(['prefix' => '/charts'], function() {
             Route::resource('eth', 'EtherController', ['only' => 'index']);
         });
+        Route::get('/notifications', 'NotificationsController@all');
     });
 
     Route::group(['middleware' => 'developer'], function() {

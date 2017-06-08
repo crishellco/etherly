@@ -1,16 +1,11 @@
+window.$ = window.jQuery = require('jquery');
 window._ = require('lodash');
-window.Vue = require('vue');
-
-try {
-    window.$ = window.jQuery = require('jquery');
-
-    require('bootstrap-sass');
-} catch (e) {}
-
-
 window.axios = require('axios');
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.numeral = require('numeral');
+window.Pusher = require('pusher-js');
+require('bootstrap-sass');
 
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
 if (token) {
@@ -18,5 +13,3 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
-
-window.Pusher = require('pusher-js');

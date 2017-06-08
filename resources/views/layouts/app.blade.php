@@ -99,6 +99,11 @@
     </div>
 
     <!-- Scripts -->
+    <script>
+        window.Laravel = {
+            userId: {{auth()->user() ? auth()->id() : 'null'}}
+        }
+    </script>
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>

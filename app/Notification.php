@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Observers\NotificationObserver;
 use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
@@ -20,6 +21,13 @@ class Notification extends Model
         'currentPrice',
         'historicalPrice',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::observe(NotificationObserver::class);
+    }
 
     public function currentPrice()
     {

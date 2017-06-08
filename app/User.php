@@ -33,6 +33,11 @@ class User extends Authenticatable
             ->orderBy('created_at', 'desc');
     }
 
+    public function notificationsEnabled()
+    {
+        return $this->via_email || $this.via_slack;
+    }
+
     public function routeNotificationForSlack()
     {
         return $this->slack_webhook;
