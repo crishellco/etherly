@@ -30,9 +30,7 @@
 
             renderChart() {
                 if(this.chart) {
-                    this.chart.redraw();
-                    
-                    return;
+                    return this.chart.series[0].setData(this.data);
                 }
 
                 this.chart = Highcharts.stockChart('eth-chart', {
