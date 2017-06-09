@@ -12,11 +12,6 @@ class UsersController extends Controller
         return view('users.index', ['users' => User::all()]);
     }
 
-    public function create()
-    {
-        return view('users.create');
-    }
-
     public function store(Request $request)
     {
         $this->validate($request, [

@@ -62,7 +62,13 @@
                                 <a href="{{ route('home') }}">Dashboard</a>
                             </li>
                             <li>
-                                <a href="{{ route('notifications.index') }}">Your Notifications</a>
+                                <a href="{{ route('alerts.index') }}">Alerts</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('thresholds.index') }}">Thresholds</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('notifications.index') }}">Notifications</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

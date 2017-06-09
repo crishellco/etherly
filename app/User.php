@@ -26,6 +26,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function alerts()
+    {
+        return $this->hasMany(Alert::class);
+    }
+
     public function notifications()
     {
         return $this
@@ -41,5 +46,10 @@ class User extends Authenticatable
     public function routeNotificationForSlack()
     {
         return $this->slack_webhook;
+    }
+
+    public function thresholds()
+    {
+        return $this->hasMany(Threshold::class);
     }
 }
