@@ -40,7 +40,7 @@ class User extends Authenticatable
 
     public function notificationsEnabled()
     {
-        return $this->via_email || $this.via_slack;
+        return $this->via_email || $this->via_slack;
     }
 
     public function routeNotificationForSlack()
