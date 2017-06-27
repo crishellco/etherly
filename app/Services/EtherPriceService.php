@@ -11,12 +11,15 @@ use Zttp\Zttp;
 
 class EtherPriceService
 {
+    const CANDLESTICK_GRAPH_CACHE_KEY = 'graph.candlestick';
+    const GRAPH_CACHE_LENGTH = 10;
     const PAST_DATA_THRESHOLD_MINUTES = 10;
 
     public function analyzePrice()
     {
         $currentPrice = $this->getCurrentPrice();
         $historicalPrices = $this->getHistoricalPrices();
+        $this->cacheGraphData();
 
         User::all()->each(function(User $user) use ($currentPrice, $historicalPrices) {
             if($user->notificationsEnabled()) {
@@ -51,6 +54,33 @@ class EtherPriceService
 
             $user->storeNotification($currentPrice->id, $historicalPrice->id, $priceChange, $percentChange);
         }
+    }
+
+    protected function cacheGraphData()
+    {
+        $allData = Price::orderBy('created_at')
+            ->get()
+            ->map(function($price) {
+                return [
+                    'created_at' => $price->created_at->timestamp * 1000,
+                    'price' => (float) $price->price
+                ];
+            });
+
+        $candlestickData = collect($allData)
+            ->chunk(5)
+            ->map(function($group) {
+                $prices = collect($group->pluck('price'));
+                return [
+                    array_get($group->first(), 'created_at'),
+                    array_get($group->first(), 'price'),
+                    $prices->max(),
+                    $prices->min(),
+                    array_get($group->last(), 'price'),
+                ];
+            });
+
+        Cache::put(self::CANDLESTICK_GRAPH_CACHE_KEY, $candlestickData, self::GRAPH_CACHE_LENGTH);
     }
 
     public function calculatePercentChange(Price $current, Price $historical)
