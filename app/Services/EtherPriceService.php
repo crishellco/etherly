@@ -56,7 +56,7 @@ class EtherPriceService
         }
     }
 
-    protected function cacheGraphData()
+    public function cacheGraphData()
     {
         $allData = Price::orderBy('created_at')
             ->get()
