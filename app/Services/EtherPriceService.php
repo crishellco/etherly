@@ -7,6 +7,7 @@ use App\Price;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 use Zttp\Zttp;
 
 class EtherPriceService
