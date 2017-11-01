@@ -16,6 +16,8 @@ class CreatePricesTable extends Migration
         Schema::create('prices', function (Blueprint $table) {
             $table->increments('id');
             $table->double('price');
+            $table->double('percent_change')->nullable();
+            $table->double('price_change')->nullable();
             $table->timestamps();
         });
     }

@@ -24,35 +24,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('threshold_percent') || $errors->has('threshold_price') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Thresholds</label>
-
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <div class="input-group-addon">%</div>
-                                <input type="text" class="form-control" name="threshold_percent" value="{{ old('threshold_percent', auth()->user()->threshold_percent) }}">
-                            </div>
-
-                            @if ($errors->has('threshold_percent'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('threshold_percent') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <div class="input-group-addon">$</div>
-                                <input type="text" class="form-control" name="threshold_price" value="{{ old('threshold_price', auth()->user()->threshold_price) }}">
-                            </div>
-
-                            @if ($errors->has('threshold_price'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('threshold_price') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-
                     <div class="form-group{{ $errors->has('slack_webhook') ? ' has-error' : '' }}">
                         <label for="slack_webhook" class="col-md-4 control-label">Slack Webhook</label>
 

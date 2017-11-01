@@ -4,6 +4,12 @@ import Vue from 'vue';
 import * as components from './components';
 import * as mixins from './mixins';
 
+// Turbolinks
+import Turbolinks from 'turbolinks'
+import TurbolinksAdapter from 'vue-turbolinks'
+Turbolinks.start();
+Vue.use(TurbolinksAdapter);
+
 // Register global components.
 _.each(components, (component, name) => {
     Vue.component(_.kebabCase(name), component);
@@ -14,6 +20,9 @@ _.each(mixins, mixin => {
     Vue.mixin(mixin);
 });
 
-const app = new Vue({
-    el: '#app'
+document.addEventListener('turbolinks:load', () => {
+    const app = new Vue({
+        el: '#app',
+        store,
+    });
 });

@@ -47,12 +47,7 @@
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">
-                Users
-                <span class="pull-right">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary btn-xs">Add User</a>
-                </span>
-            </div>
+            <div class="panel-heading">Users</div>
             <div class="panel-body">
                 <table class="table">
                     <thead>

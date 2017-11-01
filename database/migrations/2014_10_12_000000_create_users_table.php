@@ -21,7 +21,8 @@ class CreateUsersTable extends Migration
             $table->double('threshold_percent')->nullable();
             $table->double('threshold_price')->nullable();
             $table->string('slack_webhook')->nullable();
-            $table->boolean('notifications_enabled')->default(true);
+            $table->boolean('via_email')->default(true);
+            $table->boolean('via_slack')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

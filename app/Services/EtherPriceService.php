@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Alert;
 use App\Notifications\EtherChangeThresholdExceeded;
+use App\Notifications\EtherPriceAlert;
 use App\Price;
+use App\Threshold;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -31,27 +34,48 @@ class EtherPriceService
 
     protected function analyzePriceByUser(User $user, Price $currentPrice, Collection $historicalPrices)
     {
-        $thresholdExceeded = false;
+        $notifiableThreshold = null;
+        $historicalPrice = 0;
+        $priceChange = 0;
+        $percentChange = 0;
+        $lastPrice = $historicalPrices->first();
 
+        /**
+         * Alerts
+         */
+        $user->alerts
+            ->filter(function(Alert $alert) use ($currentPrice, $lastPrice) {
+                return $alert->surpassed($currentPrice, $lastPrice);
+            })
+            ->each(function(Alert $alert) use ($user, $currentPrice, $lastPrice) {
+                $user->notify(new EtherPriceAlert($alert, $currentPrice, $lastPrice));
+            });
+
+        /**
+         * Thresholds
+         */
         foreach($historicalPrices as $historicalPrice) {
             $priceChange = $this->calculatePriceChange($currentPrice, $historicalPrice);
             $percentChange = $this->calculatePercentChange($currentPrice, $historicalPrice);
 
-            $priceThresholdExceeded = $user->threshold_price && (abs($priceChange) > $user->threshold_price);
-            $percentThresholdExceeded = $user->threshold_percent && (abs($percentChange) > $user->threshold_percent);
+            $notifiableThreshold = $user->thresholds
+                ->first(function(Threshold $threshold) use ($currentPrice, $historicalPrice) {
+                    $threshold->exceeded($currentPrice, $historicalPrice);
+                });
 
-            if($priceThresholdExceeded || $percentThresholdExceeded) {
-                $thresholdExceeded = true;
+            if($notifiableThreshold) {
                 break;
             }
         }
 
-        if($thresholdExceeded) {
+        if($notifiableThreshold) {
             $user->notify(new EtherChangeThresholdExceeded(
+                $notifiableThreshold,
                 $currentPrice,
                 $historicalPrice,
                 $priceChange,
-                $percentChange));
+                $percentChange
+            ));
 
             $user->storeNotification($currentPrice->id, $historicalPrice->id, $priceChange, $percentChange);
         }
@@ -94,7 +118,7 @@ class EtherPriceService
         return $current->price - $historical->price;
     }
 
-    protected function getCurrentPrice()
+    public function getCurrentPrice()
     {
         $response = Zttp::get(config('api.prices.eth_usd'))->json();
         $price = array_get($response, 'USD');
@@ -108,5 +132,4 @@ class EtherPriceService
             ->orderBy('created_at', 'desc')
             ->get();
     }
-
 }

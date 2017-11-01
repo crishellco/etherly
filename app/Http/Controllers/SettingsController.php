@@ -16,16 +16,12 @@ class SettingsController extends Controller
         $this->validate($request, [
             'name' => 'required|min:4',
             'slack_webhook' => 'nullable|url',
-            'threshold_percent' => 'nullable|numeric',
-            'threshold_price' => 'nullable|numeric',
         ]);
 
         $updates = $request->only(
             [
                 'name',
                 'slack_webhook',
-                'threshold_percent',
-                'threshold_price',
                 'via_email',
                 'via_slack',
             ]

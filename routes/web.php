@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
+
 Route::get('/', function () {
     return redirect('/home');
 });
